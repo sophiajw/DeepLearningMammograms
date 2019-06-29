@@ -6,6 +6,7 @@ import torch
 import torch.utils.data as data
 from PIL import Image
 from torchvision import transforms
+import matplotlib.pyplot as plt
 
 import _pickle as pickle
 
@@ -50,6 +51,28 @@ def label_img_to_rgb(label_img):
         label_img_rgb[mask] = l['rgb_values']
 
     return label_img_rgb.astype(np.uint8)
+
+
+def load_mammography_data(img_name_file):
+    path_to_images, _ = os.path.split(img_name_file)
+
+    with open(img_name_file) as f:
+        image_names = f.read().splitlines()
+
+    image_names.remove(image_names[0])
+
+    data = list()
+    for i, img_name in enumerate(image_names):
+        img = plt.imread(os.path.join(path_to_images, img_name) + '.jpg')
+        name, _ = os.path.splitext(img_name)
+        if name.split('_')[2] == 'M':
+            data.append((img, 1))
+        elif name.split('_')[2] == 'B':
+            data.append((img, 0))
+        else:
+            print(name, ': no label available')
+
+    return data
 
 
 class SegmentationData(data.Dataset):
