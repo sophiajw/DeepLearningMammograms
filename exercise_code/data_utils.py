@@ -8,7 +8,7 @@ from PIL import Image
 from torchvision import transforms
 import matplotlib.pyplot as plt
 
-import _pickle as pickle
+# import _pickle as pickle
 
 # pylint: disable=C0326
 SEG_LABELS_LIST = [
@@ -60,10 +60,16 @@ def load_mammography_data(img_name_file):
         image_names = f.read().splitlines()
 
     image_names.remove(image_names[0])
+    center_crop = transforms.CenterCrop(240)
+    gray_scale = transforms.Grayscale(num_output_channels=3)
+    to_tensor = transforms.ToTensor()
 
     data = list()
     for i, img_name in enumerate(image_names):
-        img = plt.imread(os.path.join(path_to_images, img_name) + '.jpg')
+        img = Image.open(os.path.join(path_to_images, img_name))
+        #img = center_crop(img)
+        img = gray_scale(img)
+        img = to_tensor(img)
         name, _ = os.path.splitext(img_name)
         if name.split('_')[2] == 'M':
             data.append((img, 1))
