@@ -1,7 +1,13 @@
 # DeepLearningMammograms
-Case Studies projects
+Case Studies projects [MA5616] from TUM 
 
-This archive file contains all the 322 MIAS mammograms  
+## Data
+This archive file contains all the 322 MIAS mammograms. We download the dataset from the following link(http://peipa.essex.ac.uk/pix/mias/all-mias.tar.gz).
 
-http://peipa.essex.ac.uk/pix/mias/all-mias.tar.gz -- 
-please download the dataset from the above link
+### Pre-processing
+data-pre-processing.ipynb: We created the patches (only of mammograms with a tumor) and a file document here.
+
+
+
+
+
