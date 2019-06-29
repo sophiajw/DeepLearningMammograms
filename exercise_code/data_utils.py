@@ -6,8 +6,9 @@ import torch
 import torch.utils.data as data
 from PIL import Image
 from torchvision import transforms
+import matplotlib.pyplot as plt
 
-import _pickle as pickle
+# import _pickle as pickle
 
 # pylint: disable=C0326
 SEG_LABELS_LIST = [
@@ -50,6 +51,34 @@ def label_img_to_rgb(label_img):
         label_img_rgb[mask] = l['rgb_values']
 
     return label_img_rgb.astype(np.uint8)
+
+
+def load_mammography_data(img_name_file):
+    path_to_images, _ = os.path.split(img_name_file)
+
+    with open(img_name_file) as f:
+        image_names = f.read().splitlines()
+
+    image_names.remove(image_names[0])
+    center_crop = transforms.CenterCrop(240)
+    gray_scale = transforms.Grayscale(num_output_channels=3)
+    to_tensor = transforms.ToTensor()
+
+    data = list()
+    for i, img_name in enumerate(image_names):
+        img = Image.open(os.path.join(path_to_images, img_name))
+        #img = center_crop(img)
+        img = gray_scale(img)
+        img = to_tensor(img)
+        name, _ = os.path.splitext(img_name)
+        if name.split('_')[2] == 'M':
+            data.append((img, 1))
+        elif name.split('_')[2] == 'B':
+            data.append((img, 0))
+        else:
+            print(name, ': no label available')
+
+    return data
 
 
 class SegmentationData(data.Dataset):
@@ -185,12 +214,12 @@ def get_CIFAR10_data(num_training=48000, num_validation=1000, num_test=1000):
     }
 
 
-def get_CIFAR10_datasets(num_training=48000, num_validation=1000,
+def get_CIFAR10_datasets(dir_path, num_training=48000, num_validation=1000,
                          num_test=1000, dtype=np.float32):
     """
     Load and preprocess the CIFAR-10 dataset.
     """
-    path = 'datasets/cifar10_train.p'
+    path = os.path.join(dir_path, 'datasets/cifar10_train.p')
     with open(path, 'rb') as f:
         datadict = pickle.load(f, encoding='latin1')
         X = np.array(datadict['data'])
