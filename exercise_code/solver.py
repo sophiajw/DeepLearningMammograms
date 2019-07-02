@@ -74,12 +74,15 @@ class Solver(object):
         ########################################################################
         for epoch in range(num_epochs):
             # TRAINING
+            #print(epoch)
+            #print(train_loader)
 
             for i, (inputs, targets) in enumerate(train_loader, 1):
+
                 inputs, targets = Variable(inputs), Variable(targets)
                 if next(model.parameters()).is_cuda:
                     inputs, targets = inputs.cuda(), targets.cuda()
-
+                
                 optim.zero_grad()
                 outputs = model(inputs)
                 outputs = outputs.double()
