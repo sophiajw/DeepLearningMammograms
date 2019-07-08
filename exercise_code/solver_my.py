@@ -31,6 +31,8 @@ class Solver(object):
         self.train_acc_history = []
         self.val_acc_history = []
         self.val_loss_history = []
+        self.best_val_acc = 0
+        self.best_model = None
 
     def train(self, model, train_loader, val_loader, num_epochs=10, log_nth=0):
         """
@@ -125,6 +127,10 @@ class Solver(object):
             
 
             print('[Epoch {}/{}] VAL loss: {}, acc: {}'.format(epoch + 1, num_epochs, val_loss, np.mean(val_scores)))
+            if val_acc > self.best_val_acc:
+                self.best_val_acc = val_acc
+                self.best_model = model
+                
         ########################################################################
         #                             END OF YOUR CODE                         #
         ########################################################################
