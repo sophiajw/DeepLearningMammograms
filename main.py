@@ -22,27 +22,50 @@ print("Val size: %i" % len(val_data))
 print("Test size: %i" % len(test_data))
 
 
-# load data in DataLoader
-train_loader = torch.utils.data.DataLoader(train_data, batch_size=100, shuffle=True, num_workers=4)
-val_loader = torch.utils.data.DataLoader(val_data, batch_size=100, shuffle=False, num_workers=4)
+num_epochs = 70
 
-# train the model
-model = ClassificationCNN()
-model.to(device)
-solver = Solver(optim_args={"lr": 1e-3})
-solver.train(model, train_loader, val_loader, log_nth=1000, num_epochs=10)
+#Arrays for the tuning process
+batch_size = [32,64,128]
+learning_rates = [1e-2,1e-3,1e-4]
+weight_decay = [0.0,0.001]
 
+#### maybe other interesting parameters
+# reg=...
+# log_nth=...
+
+
+for batch in batch_size:
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch, shuffle=True, num_workers=1)
+    val_loader = torch.utils.data.DataLoader(val_data, batch_size=batch, shuffle=False, num_workers=1)
+    for lr in learning_rates:
+        for weight in weight_decay:
+            model = ClassificationCNN()
+            solver = Solver(optim_args={"lr": lr, 
+                                            #"betas": (0.9, 0.999),
+                                            #"eps": 1e-8,
+                                            "weight_decay": weight})
+
+            solver.train(model, train_loader, val_loader, log_nth=1000, num_epochs=num_epochs)
+            print(lr,batch)
+            
+best_model=solver.best_model
+
+model.save("models/Model_normal.model")
+
+
+#Sophias main
 # plot results
-plt.subplot(2, 1, 1)
-plt.plot(solver.train_loss_history, 'o')
-plt.plot(solver.val_loss_history, 'o')
-plt.xlabel('iteration')
-plt.ylabel('loss')
+#plt.subplot(2, 1, 1)
+#plt.plot(solver.train_loss_history, 'o')
+#plt.plot(solver.val_loss_history, 'o')
+#plt.xlabel('iteration')
+#plt.ylabel('loss')
 
-plt.subplot(2, 1, 2)
-plt.plot(solver.train_acc_history, '-o')
-plt.plot(solver.val_acc_history, '-o')
-plt.legend(['train', 'val'], loc='upper left')
-plt.xlabel('epoch')
-plt.ylabel('accuracy')
-plt.show()
+#plt.subplot(2, 1, 2)
+#plt.plot(solver.train_acc_history, '-o')
+#plt.plot(solver.val_acc_history, '-o')
+#plt.legend(['train', 'val'], loc='upper left')
+#plt.xlabel('epoch')
+#plt.ylabel('accuracy')
+#plt.show()
+
