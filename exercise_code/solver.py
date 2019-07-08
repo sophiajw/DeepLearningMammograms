@@ -1,5 +1,7 @@
 from random import shuffle
 import numpy as np
+from torch.optim.lr_scheduler import ExponentialLR
+from torch.optim.lr_scheduler import StepLR
 
 import torch
 from torch.autograd import Variable
@@ -72,12 +74,17 @@ class Solver(object):
         #   [Epoch 1/5] VAL   acc/loss: 0.539/1.310                            #
         #   ...                                                                #
         ########################################################################
+        
+        #scheduler = ExponentialLR(optim, gamma=0.6, last_epoch=-1)
+        #scheduler = StepLR(optim, step_size=20)
+        
         for epoch in range(num_epochs):
             # TRAINING
             #print(epoch)
             #print(train_loader)
+            #scheduler.step(epoch)
 
-            for i, (inputs, targets) in enumerate(train_loader, 1):
+            for i, (inputs, targets) in enumerate(train_loader,1):
 
                 inputs, targets = Variable(inputs), Variable(targets)
                 if next(model.parameters()).is_cuda:
@@ -86,7 +93,9 @@ class Solver(object):
                 optim.zero_grad()
                 outputs = model(inputs)
                 outputs = outputs.double()
+                
                 targets = targets.long()
+                
                 loss = self.loss_func(outputs, targets)
                 loss.backward()
                 optim.step()
@@ -100,6 +109,7 @@ class Solver(object):
                          iter_per_epoch * num_epochs,
                          train_loss))
 
+            
             _, preds = torch.max(outputs, 1)
 
             # Only allow images/pixels with label >= 0 e.g. for segmentation
@@ -139,11 +149,11 @@ class Solver(object):
             val_acc, val_loss = np.mean(val_scores), np.mean(val_losses)
             self.val_acc_history.append(val_acc)
             self.val_loss_history.append(val_loss)
-            if log_nth:
-                print('[Epoch %d/%d] VAL   acc/loss: %.3f/%.3f' % (epoch + 1,
-                                                                   num_epochs,
-                                                                   val_acc,
-                                                                   val_loss))
+           # if log_nth:
+              #  print('[Epoch %d/%d] VAL   acc/loss: %.3f/%.3f' % (epoch + 1,
+               #                                                    num_epochs,
+                #                                                   val_acc,
+                 #                                                  val_loss))
 
         ########################################################################
         #                             END OF YOUR CODE                         #

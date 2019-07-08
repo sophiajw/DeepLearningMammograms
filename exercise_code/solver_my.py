@@ -1,5 +1,7 @@
 from random import shuffle
 import numpy as np
+from torch.optim.lr_scheduler import StepLR
+import math
 
 import torch
 from torch.autograd import Variable
@@ -69,10 +71,16 @@ class Solver(object):
         #   [Epoch 1/5] VAL   acc/loss: 0.539/1.310                            #
         #   ...                                                                #
         ########################################################################
-
+        #exp_decay = math.exp(-0.01)
+        #exp_decay=0.7
+       # scheduler = StepLR(optim, step_size=2)
+        
         for epoch in range(num_epochs):
             train_scores = []
+            
+            
             for iter, (data, labels) in enumerate(train_loader):
+               # print('test')
 
                 output = model(data)
                 loss = self.loss_func(output, labels)
@@ -106,6 +114,7 @@ class Solver(object):
                 val_scores.append(np.mean((val_preds == val_targets)[val_targets_mask].data.cpu().numpy()))
 
             model.train()
+            #scheduler.step()
 
             self.val_acc_history.append(np.mean(val_scores))
 
