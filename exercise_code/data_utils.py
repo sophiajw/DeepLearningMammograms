@@ -11,46 +11,46 @@ import matplotlib.pyplot as plt
 # import _pickle as pickle
 
 # pylint: disable=C0326
-SEG_LABELS_LIST = [
-    {"id": -1, "name": "void",       "rgb_values": [0,   0,    0]},
-    {"id": 0,  "name": "building",   "rgb_values": [128, 0,    0]},
-    {"id": 1,  "name": "grass",      "rgb_values": [0,   128,  0]},
-    {"id": 2,  "name": "tree",       "rgb_values": [128, 128,  0]},
-    {"id": 3,  "name": "cow",        "rgb_values": [0,   0,    128]},
-    {"id": 4,  "name": "horse",      "rgb_values": [128, 0,    128]},
-    {"id": 5,  "name": "sheep",      "rgb_values": [0,   128,  128]},
-    {"id": 6,  "name": "sky",        "rgb_values": [128, 128,  128]},
-    {"id": 7,  "name": "mountain",   "rgb_values": [64,  0,    0]},
-    {"id": 8,  "name": "airplane",   "rgb_values": [192, 0,    0]},
-    {"id": 9,  "name": "water",      "rgb_values": [64,  128,  0]},
-    {"id": 10, "name": "face",       "rgb_values": [192, 128,  0]},
-    {"id": 11, "name": "car",        "rgb_values": [64,  0,    128]},
-    {"id": 12, "name": "bicycle",    "rgb_values": [192, 0,    128]},
-    {"id": 13, "name": "flower",     "rgb_values": [64,  128,  128]},
-    {"id": 14, "name": "sign",       "rgb_values": [192, 128,  128]},
-    {"id": 15, "name": "bird",       "rgb_values": [0,   64,   0]},
-    {"id": 16, "name": "book",       "rgb_values": [128, 64,   0]},
-    {"id": 17, "name": "chair",      "rgb_values": [0,   192,  0]},
-    {"id": 18, "name": "road",       "rgb_values": [128, 64,   128]},
-    {"id": 19, "name": "cat",        "rgb_values": [0,   192,  128]},
-    {"id": 20, "name": "dog",        "rgb_values": [128, 192,  128]},
-    {"id": 21, "name": "body",       "rgb_values": [64,  64,   0]},
-    {"id": 22, "name": "boat",       "rgb_values": [192, 64,   0]}]
+#SEG_LABELS_LIST = [
+#    {"id": -1, "name": "void",       "rgb_values": [0,   0,    0]},
+#    {"id": 0,  "name": "building",   "rgb_values": [128, 0,    0]},
+#    {"id": 1,  "name": "grass",      "rgb_values": [0,   128,  0]},
+#    {"id": 2,  "name": "tree",       "rgb_values": [128, 128,  0]},
+#    {"id": 3,  "name": "cow",        "rgb_values": [0,   0,    128]},
+#    {"id": 4,  "name": "horse",      "rgb_values": [128, 0,    128]},
+#    {"id": 5,  "name": "sheep",      "rgb_values": [0,   128,  128]},
+#    {"id": 6,  "name": "sky",        "rgb_values": [128, 128,  128]},
+#    {"id": 7,  "name": "mountain",   "rgb_values": [64,  0,    0]},
+#    {"id": 8,  "name": "airplane",   "rgb_values": [192, 0,    0]},
+#    {"id": 9,  "name": "water",      "rgb_values": [64,  128,  0]},
+#    {"id": 10, "name": "face",       "rgb_values": [192, 128,  0]},
+#    {"id": 11, "name": "car",        "rgb_values": [64,  0,    128]},
+#    {"id": 12, "name": "bicycle",    "rgb_values": [192, 0,    128]},
+#    {"id": 13, "name": "flower",     "rgb_values": [64,  128,  128]},
+#    {"id": 14, "name": "sign",       "rgb_values": [192, 128,  128]},
+#    {"id": 15, "name": "bird",       "rgb_values": [0,   64,   0]},
+#    {"id": 16, "name": "book",       "rgb_values": [128, 64,   0]},
+#    {"id": 17, "name": "chair",      "rgb_values": [0,   192,  0]},
+#    {"id": 18, "name": "road",       "rgb_values": [128, 64,   128]},
+#    {"id": 19, "name": "cat",        "rgb_values": [0,   192,  128]},
+#    {"id": 20, "name": "dog",        "rgb_values": [128, 192,  128]},
+#    {"id": 21, "name": "body",       "rgb_values": [64,  64,   0]},
+#    {"id": 22, "name": "boat",       "rgb_values": [192, 64,   0]}]
 
 
-def label_img_to_rgb(label_img):
-    label_img = np.squeeze(label_img)
-    labels = np.unique(label_img)
-    label_infos = [l for l in SEG_LABELS_LIST if l['id'] in labels]
+#def label_img_to_rgb(label_img):
+ #   label_img = np.squeeze(label_img)
+  #  labels = np.unique(label_img)
+   # label_infos = [l for l in SEG_LABELS_LIST if l['id'] in labels]
 
-    label_img_rgb = np.array([label_img,
-                              label_img,
-                              label_img]).transpose(1,2,0)
-    for l in label_infos:
-        mask = label_img == l['id']
-        label_img_rgb[mask] = l['rgb_values']
+    #label_img_rgb = np.array([label_img,
+     #                         label_img,
+      #                        label_img]).transpose(1,2,0)
+    #for l in label_infos:
+     #   mask = label_img == l['id']
+      #  label_img_rgb[mask] = l['rgb_values']
 
-    return label_img_rgb.astype(np.uint8)
+    #return label_img_rgb.astype(np.uint8)
 
 
 def load_mammography_data(img_name_file):
@@ -61,13 +61,14 @@ def load_mammography_data(img_name_file):
 
     image_names.remove(image_names[0])
     center_crop = transforms.CenterCrop(240)
+    resize = transforms.Resize((240,240))
     gray_scale = transforms.Grayscale(num_output_channels=3)
     to_tensor = transforms.ToTensor()
 
     data = list()
     for i, img_name in enumerate(image_names):
         img = Image.open(os.path.join(path_to_images, img_name))
-        #img = center_crop(img)
+        img = resize(img)
         img = gray_scale(img)
         img = to_tensor(img)
         name, _ = os.path.splitext(img_name)
