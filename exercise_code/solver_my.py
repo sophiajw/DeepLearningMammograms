@@ -81,7 +81,7 @@ class Solver(object):
             
             for iter, (data, labels) in enumerate(train_loader):
                # print('test')
-
+                data, labels = data.to(device), labels.to(device)
                 output = model(data)
                 loss = self.loss_func(output, labels)
                 loss.backward()
