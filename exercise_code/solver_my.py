@@ -116,9 +116,13 @@ class Solver(object):
             model.train()
             #scheduler.step()
 
-            self.val_acc_history.append(np.mean(val_scores))
-
+            #self.val_acc_history.append(np.mean(val_scores))
+            val_acc = np.mean(val_scores)
+            self.val_acc_history.append(val_acc)
             val_loss = self.loss_func(val_outputs, val_targets).item()
+            self.val_loss_history.append(val_loss)
+
+            
 
             print('[Epoch {}/{}] VAL loss: {}, acc: {}'.format(epoch + 1, num_epochs, val_loss, np.mean(val_scores)))
         ########################################################################
