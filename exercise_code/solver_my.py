@@ -46,8 +46,8 @@ class Solver(object):
         optim = self.optim(model.parameters(), **self.optim_args)
         self._reset_histories()
         iter_per_epoch = len(train_loader)
-        #device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        #model.to(device)
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        model.to(device)
         if torch.cuda.is_available():
             model.cuda()
         print('START TRAIN.')
@@ -107,7 +107,7 @@ class Solver(object):
             val_scores = []
             model.eval()
             for val_inputs, val_targets in val_loader:
-                # inputs, targets = inputs.to(device), targets.to(device)
+                inputs, targets = inputs.to(device), targets.to(device)
                 val_outputs = model.forward(val_inputs)
                 _, val_preds = torch.max(val_outputs, 1)
                 val_targets_mask = val_targets >= 0
