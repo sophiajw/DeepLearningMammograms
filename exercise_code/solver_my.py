@@ -107,7 +107,7 @@ class Solver(object):
             val_scores = []
             model.eval()
             for val_inputs, val_targets in val_loader:
-                inputs, targets = inputs.to(device), targets.to(device)
+                val_inputs, val_targets = val_inputs.to(device), val_targets.to(device)
                 val_outputs = model.forward(val_inputs)
                 _, val_preds = torch.max(val_outputs, 1)
                 val_targets_mask = val_targets >= 0
