@@ -1,11 +1,12 @@
 import os
 import matplotlib.pyplot as plt
 import torch
+import numpy as np
 
 from exercise_code.classifiers.classification_cnn import ClassificationCNN
 from exercise_code.data_utils import get_CIFAR10_datasets, OverfitSampler, rel_error
 from exercise_code.classifiers.classification_cnn import ClassificationCNN
-from exercise_code.solver import Solver
+from exercise_code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -22,7 +23,7 @@ print("Val size: %i" % len(val_data))
 print("Test size: %i" % len(test_data))
 
 
-num_epochs = 70
+num_epochs = 50
 
 #Arrays for the tuning process
 batch_size = [32,64,128]
@@ -35,8 +36,8 @@ weight_decay = [0.0,0.001]
 
 
 for batch in batch_size:
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch, shuffle=True, num_workers=1)
-    val_loader = torch.utils.data.DataLoader(val_data, batch_size=batch, shuffle=False, num_workers=1)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch, shuffle=True, num_workers=4)
+    val_loader = torch.utils.data.DataLoader(val_data, batch_size=batch, shuffle=False, num_workers=4)
     for lr in learning_rates:
         for weight in weight_decay:
             model = ClassificationCNN()
@@ -45,27 +46,12 @@ for batch in batch_size:
                                             #"eps": 1e-8,
                                             "weight_decay": weight})
 
+            print("learning rate: ", lr, "weight decay: ", weight, "batch size: ", batch)
             solver.train(model, train_loader, val_loader, log_nth=1000, num_epochs=num_epochs)
-            print(lr,batch)
-            
-best_model=solver.best_model
 
-model.save("models/Model_normal.model")
-
-
-#Sophias main
-# plot results
-#plt.subplot(2, 1, 1)
-#plt.plot(solver.train_loss_history, 'o')
-#plt.plot(solver.val_loss_history, 'o')
-#plt.xlabel('iteration')
-#plt.ylabel('loss')
-
-#plt.subplot(2, 1, 2)
-#plt.plot(solver.train_acc_history, '-o')
-#plt.plot(solver.val_acc_history, '-o')
-#plt.legend(['train', 'val'], loc='upper left')
-#plt.xlabel('epoch')
-#plt.ylabel('accuracy')
-#plt.show()
-
+            np.save("logs/train_loss_{}_{}_{}".format(batch, lr, weight), solver.train_loss_history)
+            np.save("logs/val_loss_{}_{}_{}".format(batch, lr, weight), solver.val_loss_history)
+            np.save("logs/train_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
+            np.save("logs/val_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
+            best_model = solver.best_model
+            best_model.save("models/classification_{}_{}_{}_{}.model".format(solver.best_val_acc, batch, lr, weight))
