@@ -28,7 +28,7 @@ num_epochs = 50
 #Arrays for the tuning process
 batch_size = [32,64,128]
 learning_rates = [1e-2,1e-3,1e-4]
-weight_decay = [0.0,0.001]
+weight_decay = [0.0, 0.001, 0.01]
 
 #### maybe other interesting parameters
 # reg=...
