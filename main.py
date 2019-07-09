@@ -13,6 +13,7 @@ train_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/tr
 val_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/val_aug.txt')
 test_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/test_aug.txt')
 
+print("loaded the dataset")
 print("Train size: %i" % len(train_data))
 print("Val size: %i" % len(val_data))
 print("Test size: %i" % len(test_data))

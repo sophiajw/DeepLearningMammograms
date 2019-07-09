@@ -33,7 +33,7 @@ class ClassificationCNN(nn.Module):
         - x: PyTorch input Variable
         """
         # my code
-        x = self.upsample(x)
+        # x = self.upsample(x)
         x = self.model(x)
         #
 
