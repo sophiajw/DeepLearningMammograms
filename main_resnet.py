@@ -3,7 +3,7 @@ import torch
 import numpy as np
 
 from exercise_code.data_utils import load_mammography_data
-from exercise_code.classifiers.classification_mammograms import ClassificationCNN
+from exercise_code.classifiers.classification_resnet import ClassificationCNN
 from exercise_code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
