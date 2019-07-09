@@ -19,7 +19,7 @@ class ClassificationCNN(nn.Module):
         #    param.requires_grad = False
 
         # bring input to size 224x224
-        self.upsample = nn.Upsample(size=(224, 224))
+        # self.upsample = nn.Upsample(size=(224, 224))
         # modify last layer to output layer of size num_classes
         self.model.fc = nn.Linear(4096, num_classes)
 

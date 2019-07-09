@@ -1,29 +1,24 @@
-import os
-import matplotlib.pyplot as plt
+
 import torch
 import numpy as np
 
-from exercise_code.classifiers.classification_cnn import ClassificationCNN
-from exercise_code.data_utils import get_CIFAR10_datasets, OverfitSampler, rel_error
-from exercise_code.classifiers.classification_cnn import ClassificationCNN
+from exercise_code.data_utils import load_mammography_data
+from exercise_code.classifiers.classification_mammograms import ClassificationCNN
 from exercise_code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# %matplotlib inline
-plt.rcParams['figure.figsize'] = (10.0, 8.0) # set default size of plots
-plt.rcParams['image.interpolation'] = 'nearest'
-plt.rcParams['image.cmap'] = 'gray'
+# load dataset
+train_data = load_mammography_data('data/train_aug.txt')
+val_data = load_mammography_data('data/val_aug.txt')
+test_data = load_mammography_data('data/test_aug.txt')
 
-# get dataset
-dir_path = os.path.dirname(os.path.realpath(__file__))
-train_data, val_data, test_data, mean_image = get_CIFAR10_datasets(dir_path)
 print("Train size: %i" % len(train_data))
 print("Val size: %i" % len(val_data))
 print("Test size: %i" % len(test_data))
 
 
-num_epochs = 50
+num_epochs = 70
 
 #Arrays for the tuning process
 batch_size = [32,64,128]
@@ -31,7 +26,6 @@ learning_rates = [1e-2,1e-3,1e-4]
 weight_decay = [0.0, 0.001, 0.01]
 
 #### maybe other interesting parameters
-# reg=...
 # log_nth=...
 
 

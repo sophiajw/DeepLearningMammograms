@@ -54,6 +54,12 @@ import matplotlib.pyplot as plt
 
 
 def load_mammography_data(img_name_file):
+    r"""
+    loads mammography patches
+
+    :param img_name_file: absolute path to txt files, txt files need to be in same folder as the images
+    :return:
+    """
     path_to_images, _ = os.path.split(img_name_file)
 
     with open(img_name_file) as f:
