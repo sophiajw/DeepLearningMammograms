@@ -9,9 +9,9 @@ from exercise_code.solver_my import Solver
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # load dataset
-train_data = load_mammography_data('data/train_aug.txt')
-val_data = load_mammography_data('data/val_aug.txt')
-test_data = load_mammography_data('data/test_aug.txt')
+train_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/train_aug.txt')
+val_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/val_aug.txt')
+test_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/test_aug.txt')
 
 print("Train size: %i" % len(train_data))
 print("Val size: %i" % len(val_data))
