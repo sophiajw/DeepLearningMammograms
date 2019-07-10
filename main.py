@@ -2,8 +2,8 @@
 import torch
 import numpy as np
 
-#from code.data_utils.py import load_mammography_data
-#from code.classifiers.classification_mammograms import ClassificationMammograms
+from code.data_utils import load_mammography_data
+from code.classifiers.classification_mammograms import ClassificationMammograms
 from code.solver import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
