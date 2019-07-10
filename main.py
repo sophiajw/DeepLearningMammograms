@@ -2,16 +2,20 @@
 import torch
 import numpy as np
 
-from content.gdrive.My Drive.CaseStudies.code.data_utils import load_mammography_data
-from content.gdrive.My Drive.CaseStudies.code.classifiers.classification_mammograms import ClassificationMammograms
-from content.gdrive.My Drive.CaseStudies.code.solver_my import Solver
+from code.data_utils import load_mammography_data
+from code.classifiers.classification_mammograms import ClassificationMammograms
+from code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # load dataset
-train_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/train_aug.txt')
-val_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/val_aug.txt')
-test_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/test_aug.txt')
+#train_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/train_aug.txt')
+#val_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/val_aug.txt')
+#test_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/test_aug.txt')
+train_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/train.txt')
+val_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/val.txt')
+test_data = load_mammography_data('/content/gdrive/My Drive/CaseStudies/data/test.txt')
+
 
 print("loaded the dataset")
 print("Train size: %i" % len(train_data))
