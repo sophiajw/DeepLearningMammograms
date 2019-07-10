@@ -2,7 +2,7 @@
 import torch
 import numpy as np
 
-from code.data_utils import load_mammography_data
+from content.gdrive.My\ Drive.CaseStudies.datacode.data_utils import load_mammography_data
 from code.classifiers.classification_mammograms import ClassificationMammograms
 from code.solver_my import Solver
 
@@ -22,7 +22,7 @@ print("Test size: %i" % len(test_data))
 num_epochs = 70
 
 #Arrays for the tuning process
-batch_size = [32,64,128]
+batch_size = [32,64]
 learning_rates = [1e-2,1e-3,1e-4]
 weight_decay = [0.0, 0.001, 0.01]
 
