@@ -2,9 +2,9 @@
 import torch
 import numpy as np
 
-from exercise_code.data_utils import load_mammography_data
-from exercise_code.classifiers.classification_mammograms import ClassificationCNN
-from exercise_code.solver_my import Solver
+from code.data_utils import load_mammography_data
+from code.classifiers.classification_mammograms import ClassificationMammograms
+from code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -35,7 +35,7 @@ for batch in batch_size:
     val_loader = torch.utils.data.DataLoader(val_data, batch_size=batch, shuffle=False, num_workers=4)
     for lr in learning_rates:
         for weight in weight_decay:
-            model = ClassificationCNN()
+            model = ClassificationMammograms()
             solver = Solver(optim_args={"lr": lr, 
                                             #"betas": (0.9, 0.999),
                                             #"eps": 1e-8,
