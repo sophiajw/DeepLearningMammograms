@@ -2,9 +2,9 @@
 import torch
 import numpy as np
 
-from content.gdrive.My\ Drive.CaseStudies.datacode.data_utils import load_mammography_data
-from code.classifiers.classification_mammograms import ClassificationMammograms
-from code.solver_my import Solver
+from content.gdrive.My Drive.CaseStudies.code.data_utils import load_mammography_data
+from content.gdrive.My Drive.CaseStudies.code.classifiers.classification_mammograms import ClassificationMammograms
+from content.gdrive.My Drive.CaseStudies.code.solver_my import Solver
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
