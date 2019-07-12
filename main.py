@@ -48,9 +48,9 @@ for batch in batch_size:
             print("learning rate:", lr, "weight decay:", weight, "batch size:", batch)
             solver.train(model, train_loader, val_loader, log_nth=1000, num_epochs=num_epochs)
 
-            np.save("logs/train_loss_{}_{}_{}".format(batch, lr, weight), solver.train_loss_history)
-            np.save("logs/val_loss_{}_{}_{}".format(batch, lr, weight), solver.val_loss_history)
-            np.save("logs/train_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
-            np.save("logs/val_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
+            np.save("/content/gdrive/My Drive/CaseStudies/logs_new/train_loss_{}_{}_{}".format(batch, lr, weight), solver.train_loss_history)
+            np.save("/content/gdrive/My Drive/CaseStudies/logs_new/val_loss_{}_{}_{}".format(batch, lr, weight), solver.val_loss_history)
+            np.save("/content/gdrive/My Drive/CaseStudies/logs_new/train_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
+            np.save("/content/gdrive/My Drive/CaseStudies/logs_new/val_acc_{}_{}_{}".format(batch, lr, weight), solver.train_acc_history)
             best_model = solver.best_model
-            best_model.save("models/classification_{}_{}_{}_{}.model".format(solver.best_val_acc, batch, lr, weight))
+            best_model.save("/content/gdrive/My Drive/CaseStudies/models_new/classification_{}_{}_{}_{}.model".format(solver.best_val_acc, batch, lr, weight))
