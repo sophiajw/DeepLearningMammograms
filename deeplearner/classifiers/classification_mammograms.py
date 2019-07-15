@@ -1,25 +1,20 @@
-"""ClassificationCNN"""
+"""ClassificationMammograms"""
 import torch
 import torch.nn as nn
 from torchvision import models
 
 
-class ClassificationCNN(nn.Module):
-    """Classification CNN using Alexnet architecture"""
+class ClassificationMammograms(nn.Module):
+    """Classification Mammograms using Alexnet architecture"""
 
-    def __init__(self, num_classes=2, pretrained=True):
-        super(ClassificationCNN, self).__init__()
-
-        # my code
+    def __init__(self, num_classes=10, pretrained=True):
+        super(ClassificationMammograms, self).__init__()
 
         self.model = models.alexnet(pretrained)
-
-        # freeze gradients of the network
-        # for param in self.model.parameters():
-        #    param.requires_grad = False
-
-        # bring input to size 224x224
-        # self.upsample = nn.Upsample(size=(224, 224))
+        
+        # bring input to size 227x227 like in alexnet necessary
+        self.upsample = nn.Upsample(size=(227, 227))
+        
         # modify last layer to output layer of size num_classes
         self.model.fc = nn.Linear(4096, num_classes)
 
@@ -33,7 +28,7 @@ class ClassificationCNN(nn.Module):
         - x: PyTorch input Variable
         """
         # my code
-        # x = self.upsample(x)
+        x = self.upsample(x)
         x = self.model(x)
         #
 
