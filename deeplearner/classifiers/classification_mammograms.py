@@ -1,23 +1,19 @@
-"""ClassificationMammograms"""
 import torch
 import torch.nn as nn
 from torchvision import models
 
-
 class ClassificationMammograms(nn.Module):
-    """Classification Mammograms using Alexnet architecture"""
-
     def __init__(self, num_classes=10, pretrained=True):
         super(ClassificationMammograms, self).__init__()
 
         self.model = models.alexnet(pretrained)
-        
-        # bring input to size 227x227 like in alexnet necessary
         self.upsample = nn.Upsample(size=(227, 227))
-        
-        # modify last layer to output layer of size num_classes
         self.model.fc = nn.Linear(4096, num_classes)
 
+        
+        
+        # bring input to size 227x227 like in alexnet necessary
+        # modify last layer to output layer of size num_classes
     def forward(self, x):
 
         """
