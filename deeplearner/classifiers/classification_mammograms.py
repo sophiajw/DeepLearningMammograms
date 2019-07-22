@@ -3,7 +3,7 @@ import torch.nn as nn
 from torchvision import models
 
 class ClassificationMammograms(nn.Module):
-    def __init__(self, num_classes=10, pretrained=True):
+    def __init__(self, num_classes=2, pretrained=True):
         super(ClassificationMammograms, self).__init__()
 
         self.model = models.alexnet(pretrained)
